@@ -1,0 +1,16 @@
+{
+  "Id": 1,
+  "Name": "Paolo",
+  "Surname": "Melissari",
+  "Sensors": [
+    {
+      "SensorId": 1,
+      "SensorType": "bloodPressure",
+      "Interval": 5
+    },
+    {
+      "SensorId": 2,
+      "SensorType": "heartbeat",
+      "Interval": 2
+    }]
+}
