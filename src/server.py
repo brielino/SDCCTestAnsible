@@ -3,7 +3,7 @@ from decimal import Decimal
 
 import boto3
 
-import dbConnection
+#import dbConnection
 from dbConnection import loadItems
 from dbConnection import database
 from flask import Flask
@@ -66,6 +66,10 @@ def pollQueue():
         print('Received and deleted message: %s' % message)
         return ('Received and deleted message: %s' % message)
     return("Empty")
+
+@server.route("/")
+def hello():
+    return("Hello from aws")
 
 
 if __name__ == "__main__":

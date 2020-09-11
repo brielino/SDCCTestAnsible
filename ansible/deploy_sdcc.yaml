@@ -1,0 +1,48 @@
+---
+- hosts: web
+  vars:
+    local_app_dir: "/home/paolo/PycharmProjects/SDCC.tar.xz"
+    remote_home: "/home/ubuntu"
+    remote_app_dir: "{{ remote_home}}/SDCC"
+
+  tasks:
+    - name: copy application directory
+      unarchive:
+        src: "{{ local_app_dir }}/"
+        dest: "{{ remote_app_dir }}"
+      register: app  # save task output 
+
+    - name: install python 3
+      become: yes # we need root privileges 
+      apt:
+        name: python3
+        state: present
+    - name: install pip3
+      become: yes # we need root privileges 
+      apt: name=python3-pip state=present 
+
+    - name: install required Python modules
+      become: yes 
+      pip:
+        name: flask
+        executable: pip3
+
+    - name: copy systemd unit file
+      become: yes 
+      copy:
+        src: "SDCC.service"
+        dest: "/etc/systemd/system/"
+
+    - name: enable and start systemd service
+      become: yes 
+      systemd:
+        daemon_reload: yes
+        state: restarted
+        name: "SDCC.service"
+        enabled: yes
+      when: app.changed # only restart if new version was uploaded
+
+    - name: copy AWS credentials
+      copy:
+        src: "/home/paolo/.aws"
+        dest: "/home/ubuntu/.aws/"

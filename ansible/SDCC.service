@@ -1,0 +1,10 @@
+[Unit]
+Description=Simple systemd service for our web application.
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ubuntu/SDCC
+ExecStart=/bin/bash /home/ubuntu/SDCC/SDCC/src/run.sh
+
+[Install]
+WantedBy=multi-user.target
