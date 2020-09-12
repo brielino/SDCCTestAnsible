@@ -1,6 +1,11 @@
 import json
 from decimal import Decimal
+import os
 
+import requests
+import requests
+from requests_aws_sign import AWSV4Sign
+from boto3 import session
 import boto3
 
 #import dbConnection
@@ -31,7 +36,6 @@ def populateDb():
     for movie in movies:
         finalist.append(str(movie['year']) + ":" + movie['title'])
     return "<p>" + "</p><p>".join(finalist) + "</p>"
-
 
 @server.route("/pollQueue")
 def pollQueue():
